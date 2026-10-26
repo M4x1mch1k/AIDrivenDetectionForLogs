@@ -17,7 +17,7 @@ docker compose up -d
 
 This starts:
 
-- **Kafka** (Bitnami, single-node KRaft) on `localhost:9092`
+- **Kafka** (`bitnamilegacy/kafka:3.9.0`, single-node KRaft) on `localhost:9092`
 - **OPA** on `localhost:8181` with `./policies` mounted
 
 Wait until both are healthy (`docker compose ps`).
