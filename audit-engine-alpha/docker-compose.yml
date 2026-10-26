@@ -13,7 +13,8 @@
 
 services:
   kafka:
-    image: bitnami/kafka:3.9
+    # bitnami/kafka public tags moved to bitnamilegacy; 3.9 alone does not exist.
+    image: bitnamilegacy/kafka:3.9.0
     ports:
       - "9092:9092"
     environment:
