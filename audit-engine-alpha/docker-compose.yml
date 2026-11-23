@@ -1,19 +1,11 @@
-# Local alpha stack: Kafka + OPA.
-# Python middleware/producer run on the host (see README) — not containerized yet.
-#
-# middleware (placeholder):
-#   image: python:3.11-slim
-#   working_dir: /app
-#   volumes: [.:/app]
-#   command: ["python", "src/middleware.py"]
-#   depends_on: [kafka, opa]
-#   environment:
-#     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-#     OPA_URL: http://opa:8181/v1/data/aws/s3/compliance/deny
+# Local MVP stack: Kafka + OPA.
+# Python middleware/producer run on the host (see README) — not containerized.
+# Ollama is expected on the host at localhost:11434 (not Compose-managed).
 
 services:
   kafka:
     # bitnami/kafka public tags moved to bitnamilegacy; 3.9 alone does not exist.
+    # bitnamilegacy/kafka:3.9.0 is multi-arch (incl. Apple Silicon / ARM64).
     image: bitnamilegacy/kafka:3.9.0
     ports:
       - "9092:9092"
