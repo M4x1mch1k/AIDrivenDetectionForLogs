@@ -7,7 +7,7 @@ Pipeline: synthetic CloudTrail events → **Kafka** → Python middleware → **
 ## Prerequisites
 
 - Docker / Docker Compose (Kafka + OPA)
-- Python 3.11+
+- **Python 3.11–3.13** (required). Python 3.14+ and 3.15 are not supported: pinned `pydantic` / `pydantic-core` wheels use PyO3, which currently maxes out at 3.13.
 - [Ollama](https://ollama.com) listening on `localhost:11434` (for live LLM analysis)
 
 Apple Silicon / ARM64: Compose uses `bitnamilegacy/kafka:3.9.0` and the official multi-arch OPA image.
@@ -17,6 +17,7 @@ Apple Silicon / ARM64: Compose uses `bitnamilegacy/kafka:3.9.0` and the official
 ```
 audit-engine-alpha/
 ├── docker-compose.yml
+├── pyproject.toml
 ├── requirements.txt
 ├── .env.example
 ├── README.md
@@ -56,12 +57,19 @@ curl -s http://localhost:11434/api/tags
 
 ## 3. Python environment
 
+Use a **3.11–3.13** interpreter (3.12 recommended). If you previously created a venv with 3.14/3.15 (install fails on `pydantic-core` / PyO3), remove it and recreate:
+
 ```bash
-python3 -m venv .venv
+# Recreate with a supported interpreter (example: 3.12)
+rm -rf .venv
+python3.12 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python -c "import sys; assert sys.version_info[:2] >= (3, 11) and sys.version_info[:2] <= (3, 13), sys.version"
 pip install -r requirements.txt
 cp .env.example .env        # optional overrides
 ```
+
+`requires-python` is also declared in `pyproject.toml` as `>=3.11,<3.14`.
 
 ## 4. Run producer (Terminal A)
 

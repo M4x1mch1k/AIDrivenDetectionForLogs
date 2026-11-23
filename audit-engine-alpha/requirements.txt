@@ -1,3 +1,4 @@
+# Requires Python 3.11–3.13 (see pyproject.toml requires-python). Do not use 3.14/3.15.
 pydantic==2.10.4
 pydantic-settings==2.7.0
 aiokafka==0.12.0
